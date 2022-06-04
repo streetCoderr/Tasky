@@ -6,6 +6,8 @@ require('dotenv').config();
 
 const port = 3000;
 
+app.use(express.static('./public'));
+
 app.use(express.json());
 
 app.get('/', (req, res) => {
