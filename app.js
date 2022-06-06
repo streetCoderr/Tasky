@@ -2,19 +2,19 @@ const express = require('express');
 const app = express();
 const taskRoutes = require('./routes/tasks');
 const connectDB = require('./db/connect');
+const errorHandler = require('./middleware/error_handler');
+const notFound = require('./middleware/not_found');
 require('dotenv').config();
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.static('./public'));
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send("Welcome to tasky");
-})
-
 app.use('/api/v1/tasks', taskRoutes);
+app.use(notFound);
+app.use(errorHandler);
 
 const start = async () => {
   try {
